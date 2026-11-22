@@ -12,6 +12,35 @@ public sealed class CellWorldRoomManager : MonoBehaviour
     [SerializeField]
     private PlayerLiquidInteraction2D playerLiquidInteraction;
     public CellWorld2D CurrentWorld { get; private set; }
+    private readonly System.Collections.Generic.Dictionary<CellWorld2D, float> effectUntil =
+        new System.Collections.Generic.Dictionary<CellWorld2D, float>();
+
+    public CellWorld2D GetWorldAt(Vector2 position)
+    {
+        CellWorld2D selected = null;
+        float smallestArea = float.PositiveInfinity;
+        foreach (CellWorld2D world in worlds)
+        {
+            if (world == null || !world.isActiveAndEnabled || !world.IsInitialized ||
+                !world.TryWorldToCell(position, out _)) continue;
+            float area = world.Width * world.Height * world.CellSize * world.CellSize *
+                Mathf.Abs(world.transform.lossyScale.x * world.transform.lossyScale.y);
+            //a broad world must not hide a smaller room and its registered plants
+            if (area < smallestArea || (area == smallestArea && world == CurrentWorld))
+            {
+                selected = world;
+                smallestArea = area;
+            }
+        }
+        return selected;
+    }
+    public void KeepWorldActive(CellWorld2D world)
+    {
+        if (world == null) return;
+        //let spray across a doorway affect the next room before the player enters it
+        effectUntil[world] = Time.time + 3f;
+        world.SetRoomActive(true);
+    }
 
     [Header("Darkness defaults")]
     [SerializeField] private bool usePixelDarkness = true;
@@ -36,26 +65,14 @@ public sealed class CellWorldRoomManager : MonoBehaviour
 
     private void Update()
     {
-        //keep the current room while the player is inside it
-        if (!ContainsPlayer(CurrentWorld))
-        {
-            CurrentWorld = null;
+        CurrentWorld = player != null ? GetWorldAt(player.position) : null;
 
-            //otherwise find a room containing the player
-            foreach (CellWorld2D world in worlds)
-            {
-                if (!ContainsPlayer(world)) continue;
-
-                CurrentWorld = world;
-                break;
-            }
-        }
-
-        //only the selected room should simulate
+        //simulate the player room and any neighbour currently receiving spray
         foreach (CellWorld2D world in worlds)
         {
             if (world != null)
-                world.SetRoomActive(world == CurrentWorld);
+                world.SetRoomActive(world == CurrentWorld ||
+                    (effectUntil.TryGetValue(world, out float until) && Time.time < until));
         }
         
         
@@ -67,14 +84,6 @@ public sealed class CellWorldRoomManager : MonoBehaviour
         {
             playerLiquidInteraction.SetWorld(CurrentWorld);
         }
-    }
-
-    private bool ContainsPlayer(CellWorld2D world)
-    {
-        if (player == null || world == null) return false;
-        if (!world.isActiveAndEnabled || !world.IsInitialized) return false;
-
-        return world.TryWorldToCell(player.position, out _);
     }
 
     private void OnDisable()

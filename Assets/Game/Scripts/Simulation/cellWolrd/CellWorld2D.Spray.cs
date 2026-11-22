@@ -62,6 +62,8 @@ public partial class CellWorld2D
                 continue;
             }
 
+            //the fluid container border should not stop shots crossing into another room
+            if (cell.x == 0 || cell.y == 0 || cell.x == width - 1 || cell.y == height - 1) continue;
             //sprite plants let shots through, painted plant walls still hold tanks
             int index = Index(cell.x, cell.y);
             if (HasPlant(index) && !visiblePlant[index]) continue;

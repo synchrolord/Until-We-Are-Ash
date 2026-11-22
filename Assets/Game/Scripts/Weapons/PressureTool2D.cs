@@ -116,6 +116,7 @@ public sealed class PressureTool2D : MonoBehaviour
     public int CurrentFuel => currentFuel;
     public int MaximumFuel => maximumFuel;
     public CellWorld2D CurrentWorld => cellWorld;
+    private CellWorldRoomManager roomManager;
 
     private void Awake()
     {
@@ -123,6 +124,7 @@ public sealed class PressureTool2D : MonoBehaviour
         
         if (playerVitals == null)
             playerVitals = GetComponent<PlayerVitals2D>();
+        roomManager = FindAnyObjectByType<CellWorldRoomManager>();
         //find player's components
         if (playerMotor == null) playerMotor = GetComponent<PlayerMotor2D>();
         playerCollider = GetComponent<Collider2D>();
@@ -383,9 +385,12 @@ public sealed class PressureTool2D : MonoBehaviour
             Vector2 intendedEndPosition =
                 shotStartPosition + shot.velocity * stepSeconds;
 
+            //a shot can enter the next world while its owner stays in the previous room
+            CellWorld2D shotWorld = roomManager != null ? roomManager.GetWorldAt(intendedEndPosition) : null;
+            if (shotWorld == null) shotWorld = cellWorld;
             //trace path of shot
             CellWorld2D.ShotPath path =
-                cellWorld.TraceShotPath(
+                shotWorld.TraceShotPath(
                     shotStartPosition,
                     intendedEndPosition,
                     obstacleMask,
@@ -427,16 +432,19 @@ public sealed class PressureTool2D : MonoBehaviour
             bool hitCreature = creatureHit.collider != null;
 
             
+            CellWorld2D impactWorld = roomManager != null ? roomManager.GetWorldAt(path.endPosition) : null;
+            if (impactWorld != null) shotWorld = impactWorld;
+            if (roomManager != null) roomManager.KeepWorldActive(shotWorld);
             //apply water into the cellWorld
             if (isWater)
             {
-                shot.remainingWaterUnits = cellWorld.ApplyWaterShot(
+                shot.remainingWaterUnits = shotWorld.ApplyWaterShot(
                     path,
                     shot.remainingWaterUnits,
                     shot.remainingLifetimeSeconds <= 0);
             }
             //apply Fire into the cellWorld
-            else cellWorld.ApplyFlameShot(path, shot.ignitionRadiusCells);
+            else shotWorld.ApplyFlameShot(path, shot.ignitionRadiusCells);
 
             
             
@@ -485,8 +493,8 @@ public sealed class PressureTool2D : MonoBehaviour
 
         cellWorld = world;
 
-        //remove flying shots belonging to the previous room
-        activeShots.Clear();
+        //shots choose their own world now; keep them alive while crossing rooms
+        if (world == null) activeShots.Clear();
 
         if (sprayVisuals != null)
         {

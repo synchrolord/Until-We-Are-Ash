@@ -24,13 +24,12 @@ public sealed class Room2D : MonoBehaviour
             Debug.LogError("Room size needs 16–2048 cells per side and at most 1,048,576 cells. Increase Cell Size for a larger room.", this);
             return false;
         }
-        //the room's origin is its bottom-left; moving it carries every child with it
-        world.transform.localPosition = Vector3.zero;
+        //resizing should not move a world the level designer has already positioned
         world.ConfigureGrid(columns, rows, cellSize);
         return true;
     }
 
-    private void Awake() => ApplySize();
+    //the saved CellWorld bounds are already configured in the editor; keep them at runtime
 
     private void Start()
     {
@@ -43,7 +42,8 @@ public sealed class Room2D : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.matrix = transform.localToWorldMatrix;
-        Gizmos.DrawWireCube(size * 0.5f, size);
+        Gizmos.matrix = world != null ? world.transform.localToWorldMatrix : transform.localToWorldMatrix;
+        Vector2 actualSize = world != null ? new Vector2(world.Width, world.Height) * world.CellSize : size;
+        Gizmos.DrawWireCube(actualSize * 0.5f, actualSize);
     }
 }

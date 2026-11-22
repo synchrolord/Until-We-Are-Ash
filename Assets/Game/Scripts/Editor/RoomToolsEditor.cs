@@ -8,8 +8,19 @@ public sealed class RoomInspector : Editor
 {
     public override void OnInspectorGUI()
     {
-        bool changed = DrawDefaultInspector();
         Room2D room = (Room2D)target;
+        serializedObject.Update();
+        //keep the convenient room controls in sync when its child world was edited directly
+        if (!Application.isPlaying && room.World != null)
+        {
+            serializedObject.FindProperty("size").vector2Value =
+                new Vector2(room.World.Width, room.World.Height) * room.World.CellSize;
+            serializedObject.FindProperty("cellSize").floatValue = room.World.CellSize;
+        }
+        EditorGUI.BeginChangeCheck();
+        DrawPropertiesExcluding(serializedObject, "m_Script");
+        bool changed = EditorGUI.EndChangeCheck();
+        serializedObject.ApplyModifiedProperties();
         if (Application.isPlaying || !changed || room.World == null) return;
         Undo.RecordObjects(new Object[] { room.World, room.World.transform }, "Resize Room");
         room.ApplySize();
