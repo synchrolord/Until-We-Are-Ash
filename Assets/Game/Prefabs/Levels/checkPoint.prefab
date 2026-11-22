@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Checkpoint2D
   spawnPoint: {fileID: 428836187530950926}
+  bossOffset: {x: -8, y: 2}
 --- !u!1 &5540723082425363764
 GameObject:
   m_ObjectHideFlags: 0

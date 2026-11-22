@@ -32,7 +32,7 @@ public sealed class BossSpit2D : MonoBehaviour
     private void Update()
     {
         if (!canSpit || !boss.isActiveAndEnabled ||
-            boss.CurrentState != BossGrapple2D.State.Chase ||
+            boss.CurrentState != BossGrapple2D.State.Aggro ||
             boss.Target == null || spitPrefab == null ||
             Time.time < nextSpit) return;
 

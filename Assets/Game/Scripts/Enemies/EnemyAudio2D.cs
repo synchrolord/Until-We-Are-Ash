@@ -73,7 +73,9 @@ public sealed class EnemyAudio2D : MonoBehaviour
     private void Update()
     {
         if ((boss != null && !boss.isActiveAndEnabled) || (health != null && health.IsDead)) { voice.Stop(); return; }
-        int state = boss != null ? (int)boss.CurrentState :
+        int state = boss != null ?
+            (boss.CurrentState == BossGrapple2D.State.Idle || boss.CurrentState == BossGrapple2D.State.Recover ? 0 :
+             boss.CurrentState == BossGrapple2D.State.Retreat ? 2 : 1) :
             health != null && health.IsBurning ? 2 : enemy != null && enemy.IsAggro ? 1 : 0;
         if (state != previousState)
         {

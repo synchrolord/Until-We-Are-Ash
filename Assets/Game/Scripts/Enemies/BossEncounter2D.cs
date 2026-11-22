@@ -9,6 +9,7 @@ public sealed class BossEncounter2D : MonoBehaviour
     [SerializeField] private PlayerVitals2D player;
     [SerializeField] private bool wakeOnEntry = true;
     [SerializeField] private vineController wakeVines;
+    [SerializeField, Min(0f)] private float respawnPause = 2f;
     private PlayerRespawn2D playerRespawn;
     private bool hasStarted;
 
@@ -53,7 +54,7 @@ public sealed class BossEncounter2D : MonoBehaviour
 
     private void Update()
     {
-        if (boss != null && boss.CurrentState != BossGrapple2D.State.Rest)
+        if (boss != null && boss.CurrentState != BossGrapple2D.State.Idle)
             hasStarted = true;
         if (!waitingForRespawn || player == null || player.IsDead) return;
 
@@ -74,8 +75,10 @@ public sealed class BossEncounter2D : MonoBehaviour
         Transform spawn = hasStarted && playerRespawn != null && playerRespawn.BossSpawnPoint != null
             ? playerRespawn.BossSpawnPoint : spawnPoint;
         boss = Instantiate(bossPrefab, spawn.position, spawn.rotation);
-        boss.PrepareEncounter(player != null ? player.transform : null, wakeVines, hasStarted);
+        //activate first so Awake has prepared the body and arms
         boss.gameObject.SetActive(true);
+        boss.PrepareEncounter(player != null ? player.transform : null,
+            wakeVines, hasStarted, hasStarted ? respawnPause : 0f);
         triggered = hasStarted;
     }
 
@@ -94,6 +97,12 @@ public sealed class BossEncounter2D : MonoBehaviour
         if (!wakeOnEntry || triggered || boss == null || player == null || player.IsDead ||
             other.GetComponentInParent<PlayerVitals2D>() != player) return;
 
+        Wake();
+    }
+
+    public void Wake()
+    {
+        if (triggered || boss == null || player == null || player.IsDead) return;
         triggered = true;
         hasStarted = true;
         boss.SetAggro(true);
@@ -101,7 +110,7 @@ public sealed class BossEncounter2D : MonoBehaviour
 
     private void PlayerDied()
     {
-        if (boss != null && boss.CurrentState != BossGrapple2D.State.Rest) hasStarted = true;
+        if (boss != null && boss.CurrentState != BossGrapple2D.State.Idle) hasStarted = true;
         ClearBoss();
         waitingForRespawn = true;
     }

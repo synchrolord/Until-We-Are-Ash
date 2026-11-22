@@ -208,20 +208,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   aggro: 1
-  restPoint: {fileID: 0}
   wakeVines: {fileID: 0}
   breathSize: 0.05
   breathSpeed: 1.5
   vineBody: {fileID: 0}
-  retreatTime: 2
+  retreatTime: 5
   fireProtectionTime: 6
   state: 0
+  retreatDistance: 18
+  recoverTime: 4
+  huntDistance: 10
+  huntSpeed: 0.3
+  attackWait: {x: 4, y: 8}
+  attackTime: 2.5
+  idleTime: 2
   vines: {fileID: 4244604956855368561}
-  anchorCount: 9
+  anchorCount: 3
   shotDelay: 0.1
-  anchorSpacing: 5
+  anchorSpacing: 3
   regenTime: 6
-  reach: 999
+  reach: 30
   spread: 65
   moveSteps: 18
   embedDelay: 0.05
