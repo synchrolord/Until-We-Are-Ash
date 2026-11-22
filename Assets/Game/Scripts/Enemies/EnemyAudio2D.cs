@@ -22,8 +22,8 @@ public sealed class EnemyAudio2D : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float distortion = 0.15f;
 
     private BossGrapple2D boss;
-    private PlantEnemy2D enemy;
-    private CreatureHealth2D health;
+    private Enemy2D enemy;
+    private EnemyHealth2D health;
     private BossSpit2D spitter;
     private EnemyVoiceManager manager;
     private AudioSource voice;
@@ -43,8 +43,8 @@ public sealed class EnemyAudio2D : MonoBehaviour
     private void Awake()
     {
         boss = GetComponent<BossGrapple2D>();
-        enemy = GetComponent<PlantEnemy2D>();
-        health = GetComponent<CreatureHealth2D>();
+        enemy = GetComponent<Enemy2D>();
+        health = GetComponent<EnemyHealth2D>();
         spitter = GetComponent<BossSpit2D>();
         manager = EnemyVoiceManager.Get();
         voice = gameObject.AddComponent<AudioSource>();

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CreatureHealth2D : MonoBehaviour,Damageable2D
+public class EnemyHealth2D : MonoBehaviour,Damageable2D
 {
     public event Action Hurt;
     public bool IsBurning => burning;
@@ -24,7 +24,7 @@ public class CreatureHealth2D : MonoBehaviour,Damageable2D
     [Header("Death")]
     [SerializeField, Min(0f)] private float deathDelay = 0.5f;
     [SerializeField] private Animator animator;
-    [SerializeField] private PlantEnemy2D behaviour;
+    [SerializeField] private Enemy2D behaviour;
 
 
     private static readonly int IdleAnimation =
@@ -47,7 +47,7 @@ public class CreatureHealth2D : MonoBehaviour,Damageable2D
         bodyCollider = GetComponent<Collider2D>();
 
         if (animator == null) animator = GetComponentInChildren<Animator>();
-        if (behaviour == null) behaviour = GetComponent<PlantEnemy2D>();
+        if (behaviour == null) behaviour = GetComponent<Enemy2D>();
         if (fireEmitter == null) fireEmitter = GetComponent<FireEmitter2D>(); 
         
         

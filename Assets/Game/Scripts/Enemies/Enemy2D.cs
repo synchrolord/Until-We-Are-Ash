@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public sealed class PlantEnemy2D : MonoBehaviour
+public sealed class Enemy2D : MonoBehaviour
 {
     public event System.Action Attacked;
     public event System.Action Spat;
@@ -30,8 +30,7 @@ public sealed class PlantEnemy2D : MonoBehaviour
     [SerializeField, Min(0f)] private float attackDamage = 10f;
     [SerializeField, Min(0.05f)] private float attackCooldown = 1f;
     [SerializeField] private Transform facingRoot;
-    
-    
+
     [Header("Ledge Checking")]
     [SerializeField] private LayerMask mask;
     
@@ -44,9 +43,6 @@ public sealed class PlantEnemy2D : MonoBehaviour
     [SerializeField, Min(0f)] private float spitRange = 7f;
     [SerializeField] private CellWorldRoomManager roomManager;
 
-    
-    private CellWorld2D cellWorld;
-
     //Animation
     [Header("Animation")]
     [SerializeField]float attackAnimationSeconds;
@@ -58,13 +54,8 @@ public sealed class PlantEnemy2D : MonoBehaviour
     private static readonly int WalkAnimation =
         Animator.StringToHash("Walk");
 
-
-
     private int currentAnimation;
     private float attackAnimationRemaining;
-    
-    
-    
 
     private Rigidbody2D body;
     private PlayerVitals2D player;
@@ -82,8 +73,7 @@ public sealed class PlantEnemy2D : MonoBehaviour
         
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
-        
-        
+
         body = GetComponent<Rigidbody2D>();
 
         if (spriteRenderer == null)
@@ -112,8 +102,7 @@ public sealed class PlantEnemy2D : MonoBehaviour
 
     private void Update()
     {
-        
-        
+
         attackAnimationRemaining = Mathf.Max(
             0f,
             attackAnimationRemaining - Time.deltaTime
@@ -122,15 +111,11 @@ public sealed class PlantEnemy2D : MonoBehaviour
         attackCooldownRemaining =
             Mathf.Max(0f, attackCooldownRemaining - Time.deltaTime);
 
-
     }
 
-    
     private void FixedUpdate()
     {
 
-
-        
         // enemies stop when player dies
         if (player == null || player.IsDead)
         {
@@ -147,8 +132,7 @@ public sealed class PlantEnemy2D : MonoBehaviour
             StopMoving();
             return;
         }
-        
-        
+
         if (enemyType == EnemyType.Walker)
             UpdateWalker();
         else
@@ -156,11 +140,9 @@ public sealed class PlantEnemy2D : MonoBehaviour
 
     }
 
-
         private void UpdateWalker(){
         float distanceToPlayer = GetDistanceToPlayer();
-        
-        
+
         //enemies notice player harder when infected
         float effectiveAggroDistance =
             agroDistance *
@@ -209,7 +191,6 @@ public sealed class PlantEnemy2D : MonoBehaviour
             TrySpit();
     }
 
-
     private void PatrolSurface()
     {
         if (surfaceWalker == null)
@@ -236,7 +217,6 @@ public sealed class PlantEnemy2D : MonoBehaviour
         PlayAnimation(WalkAnimation);
     }
 
-
     private void ChaseOnSurface()
     {
         if (surfaceWalker == null)
@@ -255,8 +235,7 @@ public sealed class PlantEnemy2D : MonoBehaviour
         if (attackAnimationRemaining <= 0f)
             PlayAnimation(WalkAnimation);
     }
-    
-    
+
     private void Patrol()
     {
         float distanceFromStart =
@@ -266,12 +245,10 @@ public sealed class PlantEnemy2D : MonoBehaviour
               patrolDirection = -1f;
       else if (distanceFromStart <= -patrolDistance)
           patrolDirection = 1f;
-      
-      
+
       if (!CanMove(patrolDirection))
           patrolDirection *= -1f;
-        
-        
+
       if (CanMove(patrolDirection))
       {
           MoveHorizontal(patrolDirection, moveSpeed);
@@ -282,8 +259,7 @@ public sealed class PlantEnemy2D : MonoBehaviour
           StopMoving();
           PlayAnimation(IdleAnimation);
       }
-      
-      
+
     }
     private void ChasePlayer()
     {
@@ -291,7 +267,6 @@ public sealed class PlantEnemy2D : MonoBehaviour
             player.transform.position.x -
             transform.position.x
         );
-        
 
         if (CanMove(direction))
             MoveHorizontal(direction, agroSpeed);
@@ -303,14 +278,13 @@ public sealed class PlantEnemy2D : MonoBehaviour
         }
     }
 
-    
-    
     private bool TryAttack()
     {
         if (attackCooldownRemaining > 0f)
             return false;
 
-        // Apply the hit and briefly lock the attack animation.
+        //pause movement briefly while biting; use idle until attack art exists
+        PlayAnimation(IdleAnimation);
         player.TakeDamage(attackDamage);
         Attacked?.Invoke();
 
@@ -328,7 +302,6 @@ public sealed class PlantEnemy2D : MonoBehaviour
         if (spitPrefab == null || shotOrigin == null)
             return ;
 
-        
         Projectile2D shot = Instantiate(
             spitPrefab,
             shotOrigin.position,
@@ -352,9 +325,6 @@ public sealed class PlantEnemy2D : MonoBehaviour
 
     }
 
-    
-    
-    
     private void MoveHorizontal(float direction, float speed)
     {
         FaceDirection(direction);
@@ -425,8 +395,7 @@ public sealed class PlantEnemy2D : MonoBehaviour
         return !wallAhead && groundAhead;
 
     }
-    
-    
+
     private void PlayAnimation(int animation)
     {
         if (animator == null ||
@@ -467,6 +436,5 @@ public sealed class PlantEnemy2D : MonoBehaviour
 
         facingRoot.localScale = scale;
     }
-    
-    
+
 }

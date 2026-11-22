@@ -408,9 +408,9 @@ public sealed class PressureTool2D : MonoBehaviour
                 //use collision information to get which enemy was hit
                 if (creatureHit.collider != null)
                 {
-                    CreatureHealth2D health =
+                    EnemyHealth2D health =
                         creatureHit.collider
-                            .GetComponentInParent<CreatureHealth2D>();
+                            .GetComponentInParent<EnemyHealth2D>();
 
                     //enemy takes fire damage
                     if (health != null)

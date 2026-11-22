@@ -216,7 +216,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6ab756eb4e68fd46b7c56900fe577a0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlantEnemy2D
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy2D
   enemyType: 1
   spriteRenderer: {fileID: 7142946827370951454}
   moveSpeed: 1.23
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0f91f5f8ed65b64b9e389c3fae25c88, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CreatureHealth2D
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth2D
   maxHealth: 30
   spriteRenderer: {fileID: 7142946827370951454}
   damageColor: {r: 1, g: 0.25, b: 0.2, a: 1}
