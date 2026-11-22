@@ -106,9 +106,11 @@ public sealed class EnemyAudio2D : MonoBehaviour
     {
         Transform target = boss != null ? boss.Target : enemy != null ? enemy.Target : null;
         Transform hearFrom = target != null ? target : listener;
-        float distance = hearFrom != null ? Vector2.Distance(transform.position, hearFrom.position) : hearingDistance;
-        float distanceVolume = Mathf.Clamp01(1f - distance / hearingDistance);
         RoomAudio2D room = RoomAudio2D.Current;
+        float range = room != null && room.HearingDistance > 0f
+            ? room.HearingDistance : hearingDistance;
+        float distance = hearFrom != null ? Vector2.Distance(transform.position, hearFrom.position) : range;
+        float distanceVolume = Mathf.Clamp01(1f - distance / Mathf.Max(1f, range));
         float heard = room != null ? room.GetVolume(this, distanceVolume) : distanceVolume;
         return 0.35f * GameOptions.EffectsVolume * heard;
     }

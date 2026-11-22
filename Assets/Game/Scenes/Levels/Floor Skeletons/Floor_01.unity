@@ -257,9 +257,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 830632141168339441, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
+      propertyPath: aggro
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 830632141168339441, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
+      propertyPath: reach
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 830632141168339441, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
+      propertyPath: idleTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 830632141168339441, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
+      propertyPath: pullSpeed
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 830632141168339441, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
+      propertyPath: attackTime
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 830632141168339441, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
+      propertyPath: attackWait.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 830632141168339441, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
+      propertyPath: attackWait.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 830632141168339441, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
+      propertyPath: huntDistance
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 1380685519997426850, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
       propertyPath: m_Name
       value: MABEL
+      objectReference: {fileID: 0}
+    - target: {fileID: 1380685519997426850, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6687039003989817294, guid: b7c0052826b10d4478c195ecbf98cca4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -425,8 +461,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 35
-  m_PointLightOuterAngle: 70
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -252401,6 +252437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b95461c457fa094d9b472b646fbc369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathZone2D
+  edgeMargin: 0.08
 --- !u!61 &252723009
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -254116,8 +254153,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 116.53247
-  m_PointLightOuterAngle: 188.11688
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -254443,8 +254480,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -254556,8 +254593,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -254845,8 +254882,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -258896,7 +258933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 446956384277452041, guid: baad25e0d31a60148870c4d092609812, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.9393806
+      value: -1.9393808
       objectReference: {fileID: 0}
     - target: {fileID: 606337993331780273, guid: baad25e0d31a60148870c4d092609812, type: 3}
       propertyPath: m_RefResolutionX
@@ -259142,7 +259179,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Systems
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3612685076145185083, guid: baad25e0d31a60148870c4d092609812, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1279221126902809827, guid: baad25e0d31a60148870c4d092609812, type: 3}
     - {fileID: 496645714141869063, guid: baad25e0d31a60148870c4d092609812, type: 3}
@@ -259306,8 +259344,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -259524,8 +259562,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 360
-  m_PointLightOuterAngle: 360
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -366022,8 +366060,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -366432,8 +366470,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -366797,8 +366835,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -367163,8 +367201,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -594971,8 +595009,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -595144,7 +595182,6 @@ Transform:
   - {fileID: 1200177310}
   - {fileID: 568004986}
   - {fileID: 1756390908}
-  - {fileID: 1442014390}
   m_Father: {fileID: 266642178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1413829235
@@ -595194,6 +595231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b95461c457fa094d9b472b646fbc369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathZone2D
+  edgeMargin: 0.08
 --- !u!61 &1442014389
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -595249,11 +595287,11 @@ Transform:
   m_GameObject: {fileID: 1442014387}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.31, y: -23.294289, z: 0}
+  m_LocalPosition: {x: 40.68, y: -19, z: 0}
   m_LocalScale: {x: 39.979874, y: 23.249834, z: 3.2804}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1413829234}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1445668100
 PrefabInstance:
@@ -595832,8 +595870,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -730493,8 +730531,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -954942,8 +954980,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -955138,8 +955176,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -955462,8 +955500,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -957247,8 +957285,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -957720,8 +957758,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 9
-  m_PointLightOuterAngle: 125
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
@@ -957859,8 +957897,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 45.571426
-  m_PointLightOuterAngle: 45.571426
+  m_PointLightInnerAngle: 92.6
+  m_PointLightOuterAngle: 146.8
   m_PointLightInnerRadius: 0.6
   m_PointLightOuterRadius: 35
   m_ShapeLightParametricSides: 5
@@ -958000,6 +958038,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 930276792}
+  - {fileID: 1442014390}
   - {fileID: 966718959}
   - {fileID: 86245473}
   - {fileID: 1897396026}

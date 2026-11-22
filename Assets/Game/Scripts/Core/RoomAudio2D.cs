@@ -7,12 +7,15 @@ public sealed class RoomAudio2D : MonoBehaviour
     [SerializeField] private CellWorld2D world; 
     [SerializeField] private EnemyAudio2D[] enemies = new EnemyAudio2D[0];
     [SerializeField, Range(0f, 1f)] private float volume = 1f;
+    [Tooltip("0 keeps each enemy's usual hearing distance.")]
+    [SerializeField, Min(0f)] private float hearingDistance;
     [SerializeField, Range(10f, 22000f)] private float cutoff = 22000f;
     [SerializeField, Range(0f, 1f)] private float distortion;
     [SerializeField] private AudioReverbPreset reverb = AudioReverbPreset.Off;
 
     private CellWorldRoomManager manager;
     public static RoomAudio2D Current { get; private set; }
+    public float HearingDistance => hearingDistance;
     public float Cutoff => cutoff;
     public float Distortion => distortion;
     public AudioReverbPreset Reverb => reverb;
@@ -33,10 +36,10 @@ public sealed class RoomAudio2D : MonoBehaviour
 
     public float GetVolume(EnemyAudio2D enemy, float distanceVolume)
     {
-        //listed enemies use the room volume, even when they are in another room
+        //listed enemies can be heard across rooms, fading with the room distance
         if (enemies.Length == 0) return distanceVolume * volume;
         foreach (EnemyAudio2D sound in enemies)
-            if (sound == enemy) return volume;
+            if (sound == enemy) return hearingDistance > 0f ? distanceVolume * volume : volume;
         return 0f;
     }
 
