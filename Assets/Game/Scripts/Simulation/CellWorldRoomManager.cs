@@ -55,10 +55,14 @@ public sealed class CellWorldRoomManager : MonoBehaviour
 
     public void RegisterWorld(CellWorld2D world)
     {
-        if (world == null || System.Array.IndexOf(worlds, world) >= 0) return;
-        int index = worlds.Length;
-        System.Array.Resize(ref worlds, index + 1);
-        worlds[index] = world;
+        if (world == null) return;
+        if (System.Array.IndexOf(worlds, world) < 0)
+        {
+            int index = worlds.Length;
+            System.Array.Resize(ref worlds, index + 1);
+            worlds[index] = world;
+        }
+        //inspector-assigned worlds need the same setup as automatically added ones
         world.SetActivityTarget(player);
         world.SetRoomActive(false);
     }

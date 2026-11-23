@@ -9,6 +9,10 @@ public sealed class Room2D : MonoBehaviour
     [Tooltip("Smaller cells give more detail and cost more. Resize the room here instead of scaling its Transform.")]
     [SerializeField, Min(0.0625f)] private float cellSize = 0.25f;
     [SerializeField] private CellWorld2D world;
+    private CellWorldRoomManager manager;
+    private vineController[] vines;
+    private bool vinesActive = true;
+
     public Vector2 Size => size;
     public CellWorld2D World => world;
 
@@ -33,10 +37,37 @@ public sealed class Room2D : MonoBehaviour
 
     private void Start()
     {
-        CellWorldRoomManager manager = FindAnyObjectByType<CellWorldRoomManager>();
-        if (manager != null) manager.RegisterWorld(world);
+        manager = FindAnyObjectByType<CellWorldRoomManager>();
+        vines = GetComponentsInChildren<vineController>(true);
+        if (manager != null)
+        {
+            SetVinesActive(false);
+            manager.RegisterWorld(world);
+        }
         CameraFollow2D camera = FindAnyObjectByType<CameraFollow2D>();
         if (camera != null) camera.UseRooms(true);
+    }
+
+    private void LateUpdate()
+    {
+        if (manager != null)
+            SetVinesActive(world != null && manager.CurrentWorld == world);
+    }
+
+    private void SetVinesActive(bool active)
+    {
+        if (vinesActive == active) return;
+        vinesActive = active;
+
+        foreach (vineController vine in vines)
+        {
+            if (vine == null || vine.GetComponentInParent<Room2D>(true) != this ||
+                vine.GetComponentInParent<BossGrapple2D>(true) != null) continue;
+
+            //disable the whole group so its ropes also stop moving and checking fire
+            //MABEL keeps her moving vines when crossing into another room
+            vine.gameObject.SetActive(active);
+        }
     }
 
     private void OnDrawGizmosSelected()
