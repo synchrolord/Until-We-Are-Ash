@@ -15,6 +15,9 @@ public sealed class PlayerMotor2D : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundRadius = 0.12f;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField, Min(1)] private int maxJumps = 4;
+    private int jumpsLeft;
+    public int JumpsLeft => jumpsLeft;
     
     
     
@@ -125,6 +128,7 @@ public sealed class PlayerMotor2D : MonoBehaviour
         
         body = GetComponent<Rigidbody2D>();
         normalGravity = body.gravityScale;
+        ResetJumps();
 
         if (liquids == null) liquids = GetComponent<PlayerLiquidInteraction2D>();
         if (animator == null) { animator = GetComponentInChildren<Animator>(); }
@@ -132,6 +136,11 @@ public sealed class PlayerMotor2D : MonoBehaviour
     }
 
  
+    public void ResetJumps()
+    {
+        jumpsLeft = Mathf.Max(1, maxJumps);
+    }
+
     //store players input as vector2
     public void OnMove(InputValue value)
     {
@@ -233,6 +242,7 @@ public sealed class PlayerMotor2D : MonoBehaviour
 
         if (IsSwimming)
         {
+            ResetJumps();
             wallJumpRemaining = 0f;
             Swim();
             UpdateAppearance();
@@ -241,6 +251,8 @@ public sealed class PlayerMotor2D : MonoBehaviour
         
         
         bool groundedNow = TouchesGround();
+        //walls do not refill jumps, so climbing needs a place to land
+        if (groundedNow) ResetJumps();
         
         int wallSide = GetWallSide();
         IsTouchingWall = wallSide != 0;
@@ -284,10 +296,11 @@ public sealed class PlayerMotor2D : MonoBehaviour
         
         
         //when to allow jumping
-        if (jumpBufferRemaining > 0f &&
+        if (jumpBufferRemaining > 0f && jumpsLeft > 0 &&
             (IsGrounded || IsTouchingWall || coyoteRemaining > 0f))
         {
             velocity.y = jumpSpeed;
+            jumpsLeft--;
 
             if (!IsGrounded && wallSide != 0)
             {

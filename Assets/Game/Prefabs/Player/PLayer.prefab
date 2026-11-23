@@ -225,7 +225,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMotor2D
   moveSpeed: 12
-  sprintMultiplier: 2
   jumpSpeed: 16
   coyoteTime: 0.12
   jumpBufferTime: 0.14
@@ -234,10 +233,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  maxJumps: 5
   leftCheck: {fileID: 0}
   rightCheck: {fileID: 0}
   wallCheckRadius: 0.1
   wallJumpSpeed: 14
+  wallJumpUpSpeed: 16
   wallJumpTime: 0.18
   liquids: {fileID: 0}
   swimSpeed: 5

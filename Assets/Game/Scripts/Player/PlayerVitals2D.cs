@@ -178,7 +178,17 @@ public partial class PlayerVitals2D : MonoBehaviour, Damageable2D{
             
             
             float flash = flashSeconds > 0f ? (ReducedFlashing ? 0.15f : 0.65f) : 0f;
-            characterRenderer.color = Color.Lerp(stageTint, damageTint, flash);
+
+            //share the damage tint instead of having two scripts recolor the player
+            float jumpWarning = 0f;
+            if (!IsDead && motor != null && !motor.IsSwimming)
+            {
+                if (motor.JumpsLeft == 0) jumpWarning = 1f;
+                else if (motor.JumpsLeft == 1)
+                    jumpWarning = ReducedFlashing ? 0.45f : Mathf.PingPong(Time.time * 2f, 0.8f);
+            }
+
+            characterRenderer.color = Color.Lerp(stageTint, damageTint, Mathf.Max(flash, jumpWarning));
         }
 
         if (!IsBurning) return;
@@ -258,6 +268,7 @@ public partial class PlayerVitals2D : MonoBehaviour, Damageable2D{
     {
         
         IsDead = false;
+        if (motor != null) motor.ResetJumps();
         invincibilitySeconds = invincibilityTime;
         wetSeconds = smokeExposure = flashSeconds = sampleTimer = 0f;
         denseSmoke = false;
