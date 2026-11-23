@@ -3,3 +3,4 @@
 Builds/prototype/Untill[[:space:]]We[[:space:]]Are[[:space:]]Ash_Data/sharedassets1.assets.resS filter=lfs diff=lfs merge=lfs -text
 
 *.pdf binary
+Assets/Game/Scenes/Levels/Floor[[:space:]]Skeletons/Floor_04.unity filter=lfs diff=lfs merge=lfs -text
