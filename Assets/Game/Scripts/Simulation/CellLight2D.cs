@@ -23,6 +23,7 @@ public sealed class CellLight2D : MonoBehaviour
     {
         get
         {
+            if (!GameOptions.LightFlicker) return lightLevel;
             //smooth random flicker that only makes the light smaller
             float flicker = Mathf.PerlinNoise(
                 flickerOffset,

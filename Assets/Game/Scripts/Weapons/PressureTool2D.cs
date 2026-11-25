@@ -115,6 +115,11 @@ public sealed class PressureTool2D : MonoBehaviour
     public int MaximumWater => maximumWater;
     public int CurrentFuel => currentFuel;
     public int MaximumFuel => maximumFuel;
+    public bool UnlimitedResources
+    {
+        get => unlimitedResourcesForTesting;
+        set => unlimitedResourcesForTesting = value;
+    }
     public CellWorld2D CurrentWorld => cellWorld;
     private CellWorldRoomManager roomManager;
 
@@ -139,6 +144,7 @@ public sealed class PressureTool2D : MonoBehaviour
     
     private void Update()
     {
+        if (Time.timeScale == 0f) return;
         
         if (cellWorld == null || !cellWorld.IsInitialized || muzzle == null)
         {

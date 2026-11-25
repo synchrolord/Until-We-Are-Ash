@@ -30,7 +30,7 @@ public sealed class PlayerUnlocks2D : MonoBehaviour
     //reset unlocks only when starting a new game session
     [RuntimeInitializeOnLoadMethod(
         RuntimeInitializeLoadType.SubsystemRegistration)]
-    private static void ResetItems()
+    public static void ResetItems()
     {
         items.Clear();
         started = false;
@@ -59,5 +59,20 @@ public sealed class PlayerUnlocks2D : MonoBehaviour
     public static void Add(Item item)
     {
         items.Add(item);
+    }
+    //save one bit for each unlocked item
+    public static int GetMask()
+    {
+        int mask = 0;
+        foreach (Item item in items) mask |= 1 << (int)item;
+        return mask;
+    }
+
+    public static void Restore(int mask)
+    {
+        ResetItems();
+        started = true;
+        foreach (Item item in System.Enum.GetValues(typeof(Item)))
+            if ((mask & (1 << (int)item)) != 0) items.Add(item);
     }
 }

@@ -69,7 +69,8 @@ public partial class PlayerVitals2D : MonoBehaviour, Damageable2D{
     public bool IsWet => wetSeconds > 0f;
 
     public Vector2 BodyCenter =>
-        bodyCollider != null ? (Vector2)bodyCollider.bounds.center : (Vector2)transform.position;
+        bodyCollider != null && bodyCollider.enabled
+            ? (Vector2)bodyCollider.bounds.center : (Vector2)transform.position;
 
     public bool IsInSmoke => smokeExposure >= smokeGraceSeconds && denseSmoke;
 
@@ -80,6 +81,7 @@ public partial class PlayerVitals2D : MonoBehaviour, Damageable2D{
 
     public float IncomingDamageMultiplier { get; set; } = 1f;
     public bool ReducedFlashing { get; set; }
+    public bool IgnoreDamage { get; set; }
 
 
     private PlayerMotor2D motor;
@@ -284,7 +286,7 @@ public partial class PlayerVitals2D : MonoBehaviour, Damageable2D{
 
     public float ApplyDamage(float amount,bool showFlash = true)
     {
-        if (IsDead || amount <= 0) return 0f;
+        if (IsDead || IgnoreDamage || amount <= 0) return 0f;
         float damageTaken = Mathf.Min(currentHealth, amount);
         currentHealth -= damageTaken;
         

@@ -16,6 +16,7 @@ public sealed class RandomLightFlickerGroup2D : MonoBehaviour
     private Light2D[] lights;
     private float[] timers;
     private bool[] lightIsOn;
+    private bool steady;
 
     private void Awake()
     {
@@ -26,7 +27,7 @@ public sealed class RandomLightFlickerGroup2D : MonoBehaviour
 
         for (int i = 0; i < lights.Length; i++)
         {
-            lightIsOn[i] = Random.value >= 0.5f;
+            lightIsOn[i] = !GameOptions.LightFlicker || Random.value >= 0.5f;
             lights[i].enabled = lightIsOn[i];
             timers[i] = GetRandomDuration(lightIsOn[i]);
         }
@@ -35,6 +36,23 @@ public sealed class RandomLightFlickerGroup2D : MonoBehaviour
     private void Update()
     {
         if (intensity != appliedIntensity) ApplyIntensity();
+        if (!GameOptions.LightFlicker)
+        {
+            //do this once so lights cannot be left off halfway through a flicker
+            if (!steady)
+                for (int i = 0; i < lights.Length; i++)
+                {
+                    lightIsOn[i] = true;
+                    if (lights[i] != null) lights[i].enabled = true;
+                }
+            steady = true;
+            return;
+        }
+        if (steady)
+        {
+            for (int i = 0; i < timers.Length; i++) timers[i] = GetRandomDuration(true);
+            steady = false;
+        }
 
         for (int i = 0; i < lights.Length; i++)
         {
