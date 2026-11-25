@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e625638b23c51b458f65e66e6ebce3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile2D
-  speed: 6
+  speed: 10
   lifetime: 20
   damage: 2
   poisonAmount: 25

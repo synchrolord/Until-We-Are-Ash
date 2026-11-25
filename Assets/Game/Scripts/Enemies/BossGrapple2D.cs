@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public sealed class BossGrapple2D : MonoBehaviour
 {
-    public enum State { Idle = 0, Aggro = 1, Retreat = 2, Hunt = 3, Recover = 4 }
+    public enum State { Idle = 0, Aggro = 1, Retreat = 2, Hunt = 3, Recover = 4, Burning = 5 }
 
     [Header("Target")]
     [SerializeField] private Transform target;
@@ -44,6 +44,15 @@ public sealed class BossGrapple2D : MonoBehaviour
     public event System.Action Attacked;
     public event System.Action Hurt;
     public void NotifyAttack() => Attacked?.Invoke();
+    private Transform fightPoint;
+    private float fightPause;
+    private Transform[] viaPoints = new Transform[0];
+    private int viaIndex;
+    private Vector2 FightTarget => viaIndex < viaPoints.Length && viaPoints[viaIndex] != null
+        ? (Vector2)viaPoints[viaIndex].position : (Vector2)fightPoint.position;
+    public bool IsFighting => fightPoint != null;
+    private bool AtFightPoint => IsFighting && viaIndex >= viaPoints.Length &&
+        Vector2.Distance(BodyCenter, fightPoint.position) <= 1.5f;
     public Transform Target => target;
     public LayerMask WallMask => wallMask;
 
@@ -95,6 +104,42 @@ public sealed class BossGrapple2D : MonoBehaviour
     private Arm[] arms;
     private Arm pullingArm;
 
+    public void SetFightSpeed(float speed)
+    {
+        //change this spawned fighter without changing MABEL in the earlier levels
+        pullSpeed = maxSpeed = speed;
+        moveSteps = 8;
+        pause = 0.04f;
+    }
+
+    public void SetFightPoint(Transform point, float pauseSeconds, Transform[] via = null)
+    {
+        fightPoint = point;
+        viaPoints = via ?? new Transform[0];
+        viaIndex = 0;
+        fightPause = pauseSeconds;
+        ExtinguishFor(fightPause);
+        body.bodyType = RigidbodyType2D.Dynamic;
+        if (awakeOnce) SetState(State.Retreat);
+    }
+
+    public void FinishFight()
+    {
+        fightPoint = null;
+        wakeAfterPause = false;
+        SetState(State.Burning);
+        foreach (Arm arm in arms)
+        {
+            if (arm.routine != null) StopCoroutine(arm.routine);
+            arm.routine = null;
+            Release(arm);
+        }
+        body.linearVelocity = Vector2.zero;
+        body.bodyType = RigidbodyType2D.Kinematic;
+        bodyCollider.enabled = false;
+        if (vineBody != null) vineBody.BurnAway();
+    }
+
     public void SetAggro(bool value)
     {
         aggro = value;
@@ -123,7 +168,17 @@ public sealed class BossGrapple2D : MonoBehaviour
 
     public void Ignite()
     {
-        if (Time.time < fireProtectedUntil || state == State.Retreat || state == State.Recover) return;
+        if (state == State.Burning || Time.time < fireProtectedUntil ||
+            state == State.Retreat || state == State.Recover) return;
+        if (IsFighting)
+        {
+            //only burning her body at a ready point counts, not a distant grapple tip
+            if (!awakeOnce || !AtFightPoint || state != State.Aggro ||
+                vineBody == null || !vineBody.IsBurning) return;
+            fireProtectedUntil = Time.time + 0.1f;
+            Hurt?.Invoke();
+            return;
+        }
         awakeOnce = aggro = true;
         SetState(State.Retreat);
         Hurt?.Invoke();
@@ -131,7 +186,11 @@ public sealed class BossGrapple2D : MonoBehaviour
 
     private void Extinguish()
     {
-        float protection = recoverTime + fireProtectionTime;
+        ExtinguishFor(recoverTime + fireProtectionTime);
+    }
+
+    private void ExtinguishFor(float protection)
+    {
         fireProtectedUntil = Time.time + protection;
         if (vineBody != null) vineBody.Extinguish(protection);
         foreach (Arm arm in arms)
@@ -140,6 +199,7 @@ public sealed class BossGrapple2D : MonoBehaviour
 
     private void Update()
     {
+        if (state == State.Burning) return;
         if (target == null)
         {
             player = FindAnyObjectByType<PlayerVitals2D>();
@@ -156,6 +216,28 @@ public sealed class BossGrapple2D : MonoBehaviour
         }
         stateTime += Time.deltaTime;
 
+        if (IsFighting && awakeOnce)
+        {
+            //pass the guides without stopping; only the final point starts another round
+            while (viaIndex < viaPoints.Length && (viaPoints[viaIndex] == null ||
+                Vector2.Distance(BodyCenter, viaPoints[viaIndex].position) <= 2.5f))
+                viaIndex++;
+            if (!AtFightPoint)
+            {
+                //travel safely so the same flame cannot finish several rounds
+                ExtinguishFor(0.5f);
+                if (state != State.Retreat) SetState(State.Retreat);
+            }
+            else if (state != State.Aggro)
+            {
+                ExtinguishFor(fightPause);
+                //hold her here instead of letting gravity pull her off the fight point
+                body.linearVelocity = Vector2.zero;
+                body.bodyType = RigidbodyType2D.Kinematic;
+                SetState(State.Aggro);
+            }
+        }
+
         //fire wakes the encounter, but can't restart retreat during recovery protection
         if (Time.time >= nextBurnCheck)
         {
@@ -165,6 +247,8 @@ public sealed class BossGrapple2D : MonoBehaviour
             foreach (Arm arm in arms)
                 if (arm.vine != null && arm.vine.IsBurning) { Ignite(); break; }
         }
+
+        if (IsFighting || state == State.Burning) return;
 
         float distance = Vector2.Distance(BodyCenter, TargetCenter);
         switch (state)
@@ -195,6 +279,7 @@ public sealed class BossGrapple2D : MonoBehaviour
     private bool ShouldPull()
     {
         if (target == null || (player != null && player.IsDead)) return false;
+        if (IsFighting) return awakeOnce && !AtFightPoint;
         if (state == State.Aggro || state == State.Retreat) return true;
         return state == State.Hunt && Mathf.Abs(Vector2.Distance(BodyCenter, TargetCenter) - huntDistance) > 2f;
     }
@@ -202,6 +287,7 @@ public sealed class BossGrapple2D : MonoBehaviour
     private Vector2 AimDirection()
     {
         if (state == State.Idle || target == null) return Vector2.up;
+        if (IsFighting) return (FightTarget - BodyCenter).normalized;
         Vector2 offset = TargetCenter - BodyCenter;
         bool away = state == State.Retreat ||
             (state == State.Hunt && offset.magnitude < huntDistance);
@@ -273,6 +359,7 @@ public sealed class BossGrapple2D : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (state == State.Burning) return;
         //idle is a real hanging body: shorten the same anchors a little, then let go
         if (state == State.Idle)
             foreach (Arm arm in arms)
@@ -393,7 +480,7 @@ public sealed class BossGrapple2D : MonoBehaviour
 
             //only an attack can grapple the player; hunting and retreat use walls
             int layers = wallMask.value;
-            if (state == State.Aggro && target != null) layers |= 1 << target.gameObject.layer;
+            if (state == State.Aggro && !IsFighting && target != null) layers |= 1 << target.gameObject.layer;
             RaycastHit2D hit = Physics2D.Raycast(BodyCenter, direction, reach, layers);
 
             //ignore surfaces too close to make a useful pull

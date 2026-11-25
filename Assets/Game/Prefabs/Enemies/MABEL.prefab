@@ -276,7 +276,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.625
+  m_Radius: 0.1
 --- !u!114 &793900000000000002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +349,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 45fe129951902854785492c2ec1b5f9b, type: 3}
   - {fileID: 8300000, guid: 7097bf79ee4e0534eb7c278672bbd00c, type: 3}
   pauseBetweenSounds: {x: 2, y: 5}
+  idlePause: {x: 8, y: 15}
   hurtPause: 0.75
+  aggroPause: 10
   hearingDistance: 40
   pitch: {x: 0.45, y: 1.05}
   loudness: {x: 0.65, y: 0.9}

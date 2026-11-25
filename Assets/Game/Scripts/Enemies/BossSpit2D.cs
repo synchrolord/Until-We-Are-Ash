@@ -16,6 +16,14 @@ public sealed class BossSpit2D : MonoBehaviour
     private Collider2D bodyCollider;
     private float nextSpit;
 
+    public void EnableFightAttack(float distance, float interval)
+    {
+        canSpit = true;
+        range = distance;
+        spitInterval = Mathf.Max(0.1f, interval);
+        nextSpit = Time.time + spitInterval;
+    }
+
     private void Awake()
     {
         boss = GetComponent<BossGrapple2D>();
@@ -50,7 +58,8 @@ public sealed class BossSpit2D : MonoBehaviour
         if (Physics2D.Raycast(start, direction, distance, boss.WallMask)) return;
 
         Projectile2D shot = Instantiate(spitPrefab, start, Quaternion.identity);
-        shot.Launch(direction, roomManager != null ? roomManager.CurrentWorld : null);
+        shot.Launch(direction, roomManager != null ? roomManager.CurrentWorld : null,
+            boss.IsFighting ? range : 0f);
         Spat?.Invoke();
         nextSpit = Time.time + spitInterval;
     }

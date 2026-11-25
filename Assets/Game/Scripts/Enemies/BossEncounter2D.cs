@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 //place one encounter trigger with its own boss prefab and starting position
 [RequireComponent(typeof(BoxCollider2D))]
@@ -12,6 +13,28 @@ public sealed class BossEncounter2D : MonoBehaviour
     [SerializeField, Min(0f)] private float respawnPause = 2f;
     private PlayerRespawn2D playerRespawn;
     private bool hasStarted;
+
+    [System.Serializable]
+    private class FightPoint
+    {
+        public Transform point;
+        public GameObject gate;
+        [Tooltip("Optional points to pass on the way here from the previous fight point.")]
+        public Transform[] via = new Transform[0];
+    }
+
+    [Header("Final fight (leave empty for a normal chase)")]
+    [SerializeField] private FightPoint[] fightPoints = new FightPoint[0];
+    [SerializeField, Min(0f)] private float fightPause = 2f;
+    [SerializeField, Min(1f)] private float fightRange = 90f;
+    [SerializeField, Min(1f)] private float fightSpeed = 32f;
+    [SerializeField, Min(0.1f)] private float fightShotInterval = 0.5f;
+    [SerializeField] private UnityEvent onFinished = new UnityEvent();
+    private int fightIndex;
+    private bool fightFinished;
+    public bool FightFinished => fightFinished;
+    public event System.Action Finished;
+    private bool IsFight => fightPoints.Length > 0;
 
     public void Configure(BossGrapple2D prefab, Transform spawn, vineController camouflage)
     {
@@ -44,7 +67,16 @@ public sealed class BossEncounter2D : MonoBehaviour
     private void Start()
     {
         started = true;
-        if (bossPrefab == null || spawnPoint == null)
+        if (IsFight)
+        {
+            foreach (FightPoint entry in fightPoints)
+                if (entry == null || entry.point == null)
+                {
+                    Debug.LogWarning("Assign every MABEL fight point.", this);
+                    return;
+                }
+        }
+        if (bossPrefab == null || (!IsFight && spawnPoint == null))
         {
             Debug.LogWarning("Boss Encounter needs a boss prefab and spawn point.", this);
             return;
@@ -65,20 +97,32 @@ public sealed class BossEncounter2D : MonoBehaviour
 
     private void SpawnBoss()
     {
-        if (boss != null || bossPrefab == null || spawnPoint == null) return;
+        if (boss != null || fightFinished || bossPrefab == null || (!IsFight && spawnPoint == null)) return;
+        if (IsFight && (fightIndex >= fightPoints.Length || fightPoints[fightIndex] == null ||
+            fightPoints[fightIndex].point == null)) return;
         if (player != null && player.IsDead)
         {
             waitingForRespawn = true;
             return;
         }
 
-        Transform spawn = hasStarted && playerRespawn != null && playerRespawn.BossSpawnPoint != null
-            ? playerRespawn.BossSpawnPoint : spawnPoint;
+        //finished rounds stay finished after death; respawn at the current fight point
+        Transform spawn = IsFight ? fightPoints[fightIndex].point :
+            hasStarted && playerRespawn != null && playerRespawn.BossSpawnPoint != null
+                ? playerRespawn.BossSpawnPoint : spawnPoint;
         boss = Instantiate(bossPrefab, spawn.position, spawn.rotation);
         //activate first so Awake has prepared the body and arms
         boss.gameObject.SetActive(true);
         boss.PrepareEncounter(player != null ? player.transform : null,
             wakeVines, hasStarted, hasStarted ? respawnPause : 0f);
+        if (IsFight)
+        {
+            boss.SetFightSpeed(fightSpeed);
+            boss.SetFightPoint(fightPoints[fightIndex].point, fightPause);
+            boss.Hurt += FightBurned;
+            BossSpit2D spit = boss.GetComponent<BossSpit2D>();
+            if (spit != null) spit.EnableFightAttack(fightRange, fightShotInterval);
+        }
         triggered = hasStarted;
     }
 
@@ -108,6 +152,25 @@ public sealed class BossEncounter2D : MonoBehaviour
         boss.SetAggro(true);
     }
 
+    private void FightBurned()
+    {
+        if (!hasStarted || fightFinished || boss == null) return;
+
+        GameObject gate = fightPoints[fightIndex].gate;
+        if (gate != null) gate.SetActive(false);
+        fightIndex++;
+
+        if (fightIndex < fightPoints.Length)
+            boss.SetFightPoint(fightPoints[fightIndex].point, fightPause, fightPoints[fightIndex].via);
+        else
+        {
+            fightFinished = true;
+            boss.FinishFight();
+            onFinished.Invoke();
+            Finished?.Invoke();
+        }
+    }
+
     private void PlayerDied()
     {
         if (boss != null && boss.CurrentState != BossGrapple2D.State.Idle) hasStarted = true;
@@ -126,12 +189,37 @@ public sealed class BossEncounter2D : MonoBehaviour
     {
         if (boss != null)
         {
+            boss.Hurt -= FightBurned;
             //stop attacks and release the grapples immediately
             boss.gameObject.SetActive(false);
             Destroy(boss.gameObject);
         }
         boss = null;
         triggered = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Transform previous = null;
+        foreach (FightPoint entry in fightPoints)
+        {
+            if (entry == null || entry.point == null) continue;
+            //the small yellow points are travel guides, not extra fight rounds
+            if (previous != null && entry.via != null)
+                foreach (Transform point in entry.via)
+                {
+                    if (point == null) continue;
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawWireSphere(point.position, 0.5f);
+                    Gizmos.DrawLine(previous.position, point.position);
+                    previous = point;
+                }
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(entry.point.position, 1.5f);
+            if (previous != null) Gizmos.DrawLine(previous.position, entry.point.position);
+            previous = entry.point;
+        }
     }
 
     private void OnDisable()

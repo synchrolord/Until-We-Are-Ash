@@ -24,7 +24,7 @@ public class Projectile2D : MonoBehaviour
     private float lifetimeRemaining;
     private bool hasLaunched;
 
-    public void Launch(Vector2 launchDirection, CellWorld2D world)
+    public void Launch(Vector2 launchDirection, CellWorld2D world, float travelDistance = 0f)
     {
         //assign default launch to right
         if (launchDirection.sqrMagnitude < 0.001f)
@@ -36,7 +36,8 @@ public class Projectile2D : MonoBehaviour
         
         cellWorld = world;
 
-        lifetimeRemaining = lifetime;
+        //long boss corridors need enough time for the shot to reach the other end
+        lifetimeRemaining = Mathf.Max(lifetime, travelDistance / speed);
         hasLaunched = true;
 
     }

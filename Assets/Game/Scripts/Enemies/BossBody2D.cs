@@ -12,6 +12,7 @@ public sealed class BossBody2D : MonoBehaviour
     [SerializeField, Min(0.1f)] private float regenTime = 6f;
     [SerializeField, Min(1f)] private float fireResistance = 4f;
     private float fireProtectedUntil;
+    private bool canRegrow = true;
     private VineRope2D[] ropes;
     private Transform[] firstPoints;
     private Transform[] secondPoints;
@@ -28,6 +29,14 @@ public sealed class BossBody2D : MonoBehaviour
                 if (rope != null && rope.IsBurning) return true;
             return false;
         }
+    }
+
+    public void BurnAway()
+    {
+        canRegrow = false;
+        if (ropes == null) return;
+        foreach (VineRope2D rope in ropes)
+            if (rope != null) rope.Ignite();
     }
 
     public void Extinguish(float protectionSeconds)
@@ -81,7 +90,7 @@ public sealed class BossBody2D : MonoBehaviour
 
     private void Update()
     {
-        if (ropes == null || vines == null) return;
+        if (!canRegrow || ropes == null || vines == null) return;
 
         for (int i = 0; i < ropes.Length; i++)
         {
@@ -109,6 +118,7 @@ public sealed class BossBody2D : MonoBehaviour
             firstPoints[index], secondPoints[index], lengths[index]);
         ropes[index].transform.SetParent(bodyPoints, true);
         ropes[index].BurnResistance = fireResistance;
+        if (!canRegrow) ropes[index].Ignite();
         //new growth shares the body's current fire protection
         if (Time.time < fireProtectedUntil)
             ropes[index].Extinguish(fireProtectedUntil - Time.time);

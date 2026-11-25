@@ -55,6 +55,16 @@ public sealed class VineRope2D : MonoBehaviour
 
     private int brokenLink = -1;
     public bool IsBroken => brokenLink >= 0;
+    public void Ignite()
+    {
+        if (burning == null) return;
+        for (int i = 0; i < burning.Length; i++)
+        {
+            burning[i] = true;
+            wetUntil[i] = 0f;
+        }
+    }
+
     public void Extinguish(float protectionSeconds)
     {
         if (burning == null) return;
