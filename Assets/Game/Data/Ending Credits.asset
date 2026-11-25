@@ -1,0 +1,345 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea99f4d8a874493ae30954fb988a563, type: 3}
+  m_Name: Ending Credits
+  m_EditorClassIdentifier: Assembly-CSharp::CreditsData
+  creatorName: Mostafa
+  professorName: 'Dr.Fatema Alteneiji '
+  font: {fileID: 11400000, guid: 85fb4703586cadb498e1099ec1fe9f01, type: 2}
+  arabicFont: {fileID: 12800000, guid: 5e91fcf000d9438fa383b37c7d170123, type: 3}
+  poem: {fileID: 4900000, guid: cb2fa0dead774b688ea718b705520d32, type: 3}
+  closingText: 'This game will be finished during next semester.
+
+    Thanks for playing!'
+  sections:
+  - title: Game design
+    text: '{creator}
+
+      Game design and level construction'
+    left:
+      caption: Healthy
+      animation: {fileID: -2253911629886400664, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      sprites: []
+      clips:
+      - {fileID: 8273325049105940540, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      - {fileID: -3100369314251171874, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      - {fileID: 5539831331247536789, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      - {fileID: -5155775420716587741, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      - {fileID: 4745033526770721510, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      - {fileID: -7497848331705974981, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      - {fileID: 5522812681064789136, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      - {fileID: -3704289112126983070, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      - {fileID: -7588625200656358992, guid: d2852006a927b34439e17a1f49fb8f0d, type: 3}
+      sourcePath: Assets/Game/Art/Animations/player/Player_Healthy.aseprite
+    right:
+      caption: Consumed
+      animation: {fileID: -2253911629886400664, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      sprites: []
+      clips:
+      - {fileID: 8273325049105940540, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      - {fileID: -3100369314251171874, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      - {fileID: 5539831331247536789, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      - {fileID: -5155775420716587741, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      - {fileID: 4745033526770721510, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      - {fileID: -7497848331705974981, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      - {fileID: 5522812681064789136, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      - {fileID: -3704289112126983070, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      - {fileID: -7588625200656358992, guid: 4b28919ea01bb5343bde0770ef4f9f85, type: 3}
+      sourcePath: Assets/Game/Art/Animations/player/Overrides/Player_Consumed.aseprite
+  - title: Art
+    text: 'Nico Pardo - environment sprites
+
+      {creator} - in-game artwork and animation'
+    left:
+      caption: Exposed
+      animation: {fileID: -2253911629886400664, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      sprites: []
+      clips:
+      - {fileID: 8273325049105940540, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      - {fileID: -3100369314251171874, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      - {fileID: 5539831331247536789, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      - {fileID: -5155775420716587741, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      - {fileID: 4745033526770721510, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      - {fileID: -7497848331705974981, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      - {fileID: 5522812681064789136, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      - {fileID: -3704289112126983070, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      - {fileID: -7588625200656358992, guid: 95b59f6e08835eb42ac0c1a4450317b7, type: 3}
+      sourcePath: Assets/Game/Art/Animations/player/Overrides/Player_Exposed.aseprite
+    right:
+      caption: Rooted
+      animation: {fileID: -2253911629886400664, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      sprites: []
+      clips:
+      - {fileID: 8273325049105940540, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      - {fileID: -3100369314251171874, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      - {fileID: 5539831331247536789, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      - {fileID: -5155775420716587741, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      - {fileID: 4745033526770721510, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      - {fileID: -7497848331705974981, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      - {fileID: 5522812681064789136, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      - {fileID: -3704289112126983070, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      - {fileID: -7588625200656358992, guid: bfc0f9bae8cb1e84caa5e4c3f367af51, type: 3}
+      sourcePath: Assets/Game/Art/Animations/player/Overrides/Player_Rooted.aseprite
+  - title: Infection stages
+    text: 
+    left:
+      caption: Overgrown
+      animation: {fileID: -2253911629886400664, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      sprites: []
+      clips:
+      - {fileID: 8273325049105940540, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      - {fileID: -3100369314251171874, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      - {fileID: 5539831331247536789, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      - {fileID: -5155775420716587741, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      - {fileID: 4745033526770721510, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      - {fileID: -7497848331705974981, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      - {fileID: 5522812681064789136, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      - {fileID: -3704289112126983070, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      - {fileID: -7588625200656358992, guid: f874c14437966ef4cb3a1b0e08f98387, type: 3}
+      sourcePath: Assets/Game/Art/Animations/player/Overrides/Player_Overgrown.aseprite
+    right:
+      caption: Lost
+      animation: {fileID: -2253911629886400664, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      sprites: []
+      clips:
+      - {fileID: 8273325049105940540, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      - {fileID: -3100369314251171874, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      - {fileID: 5539831331247536789, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      - {fileID: -5155775420716587741, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      - {fileID: 4745033526770721510, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      - {fileID: -7497848331705974981, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      - {fileID: 5522812681064789136, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      - {fileID: -3704289112126983070, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      - {fileID: -7588625200656358992, guid: 670fde607a9b04348a07085defd9a9d2, type: 3}
+      sourcePath: Assets/Game/Art/Animations/player/Overrides/Player_Lost.aseprite
+  - title: Plants and fire
+    text: 
+    left:
+      caption: Plant burn stages
+      animation: {fileID: 0}
+      sprites:
+      - {fileID: -327203726448197668, guid: 7d7aca6d47d5eb74d88ec92907ef7c10, type: 3}
+      - {fileID: -8904911447191469621, guid: 7d7aca6d47d5eb74d88ec92907ef7c10, type: 3}
+      - {fileID: -594916275, guid: 7d7aca6d47d5eb74d88ec92907ef7c10, type: 3}
+      - {fileID: -226500745, guid: 7d7aca6d47d5eb74d88ec92907ef7c10, type: 3}
+      clips: []
+      sourcePath: 
+    right:
+      caption: Live vines
+      animation: {fileID: 793900000000007000, guid: f14d52a039074c77951c53f35d4d2f52, type: 3}
+      sprites: []
+      clips: []
+      sourcePath: Assets/Game/Prefabs/UI/Credits Vines.prefab
+  - title: Dialogue artwork
+    text: 
+    left:
+      caption: Textbox - Healthy
+      animation: {fileID: -2253911629886400664, guid: 3192011da6a9ffb4e959c2e09e920bb5, type: 3}
+      sprites: []
+      clips:
+      - {fileID: -4792529609525627825, guid: 3192011da6a9ffb4e959c2e09e920bb5, type: 3}
+      sourcePath: Assets/Game/Art/TextBoxes/textBox Healthy.aseprite
+    right:
+      caption: Textbox - Exposed
+      animation: {fileID: -2253911629886400664, guid: 64f8d0d782a280e4fbc8fc6fcda8e554, type: 3}
+      sprites: []
+      clips:
+      - {fileID: -4792529609525627825, guid: 64f8d0d782a280e4fbc8fc6fcda8e554, type: 3}
+      sourcePath: Assets/Game/Art/TextBoxes/textBox infected_1.aseprite
+  - title: 
+    text: 
+    left:
+      caption: Textbox - Rooted
+      animation: {fileID: -2253911629886400664, guid: f5115496f1612864c89c676dfda4e15c, type: 3}
+      sprites: []
+      clips:
+      - {fileID: -4792529609525627825, guid: f5115496f1612864c89c676dfda4e15c, type: 3}
+      sourcePath: Assets/Game/Art/TextBoxes/textBox infected_2.aseprite
+    right:
+      caption: Textbox - Overgrown
+      animation: {fileID: -2253911629886400664, guid: d999fc2c4a13c8b4daffe91382d7fb9c, type: 3}
+      sprites: []
+      clips:
+      - {fileID: -4792529609525627825, guid: d999fc2c4a13c8b4daffe91382d7fb9c, type: 3}
+      sourcePath: Assets/Game/Art/TextBoxes/textBox infected_3.aseprite
+  - title: 
+    text: 
+    left:
+      caption: Textbox - Lost
+      animation: {fileID: -2253911629886400664, guid: 8572164510a9ccc4db41ca30781c5e98, type: 3}
+      sprites: []
+      clips:
+      - {fileID: -4792529609525627825, guid: 8572164510a9ccc4db41ca30781c5e98, type: 3}
+      sourcePath: Assets/Game/Art/TextBoxes/textBox infected_4.aseprite
+    right:
+      caption: Textbox - Consumed
+      animation: {fileID: -2253911629886400664, guid: 399ae0f46cf70974e8166528aa40d226, type: 3}
+      sprites: []
+      clips:
+      - {fileID: -4792529609525627825, guid: 399ae0f46cf70974e8166528aa40d226, type: 3}
+      sourcePath: Assets/Game/Art/TextBoxes/textBox infected_5.aseprite
+  - title: Faces and expressions
+    text: 
+    left:
+      caption: Faces and expressions
+      animation: {fileID: -2253911629886400664, guid: 3c09f6a6d03e00c4dbe0872d345e02ae, type: 3}
+      sprites: []
+      clips:
+      - {fileID: 2099875455882375806, guid: 3c09f6a6d03e00c4dbe0872d345e02ae, type: 3}
+      - {fileID: 689727143527590355, guid: 3c09f6a6d03e00c4dbe0872d345e02ae, type: 3}
+      - {fileID: 3887945582404246473, guid: 3c09f6a6d03e00c4dbe0872d345e02ae, type: 3}
+      - {fileID: 4711737986364919700, guid: 3c09f6a6d03e00c4dbe0872d345e02ae, type: 3}
+      - {fileID: 6952578476171241216, guid: 3c09f6a6d03e00c4dbe0872d345e02ae, type: 3}
+      - {fileID: -7895031503555114938, guid: 3c09f6a6d03e00c4dbe0872d345e02ae, type: 3}
+      sourcePath: Assets/Game/Art/Animations/facesDone.aseprite
+    right:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+  - title: Walker artwork
+    text: 'Nico Pardo - original sprites
+
+      {creator} - plantified sprites'
+    left:
+      caption: Original - Nico Pardo
+      animation: {fileID: -2253911629886400664, guid: 792458aac88a79943bb7a6e1603e5d58, type: 3}
+      sprites: []
+      clips:
+      - {fileID: -1500354584072067147, guid: 792458aac88a79943bb7a6e1603e5d58, type: 3}
+      - {fileID: -3100369314251171874, guid: 792458aac88a79943bb7a6e1603e5d58, type: 3}
+      - {fileID: 2667949614841947897, guid: 792458aac88a79943bb7a6e1603e5d58, type: 3}
+      sourcePath: Assets/Game/Art/Enemies/Walker/Walker.aseprite
+    right:
+      caption: Plantified - {creator}
+      animation: {fileID: -2253911629886400664, guid: 6e9e560c115577b4b8966dfc920aab81, type: 3}
+      sprites: []
+      clips:
+      - {fileID: -1500354584072067147, guid: 6e9e560c115577b4b8966dfc920aab81, type: 3}
+      - {fileID: -3100369314251171874, guid: 6e9e560c115577b4b8966dfc920aab81, type: 3}
+      - {fileID: 2667949614841947897, guid: 6e9e560c115577b4b8966dfc920aab81, type: 3}
+      sourcePath: Assets/Game/Art/Animations/Enemies/Walker_infected.aseprite
+  - title: Spitter artwork
+    text: 'Nico Pardo - original sprites
+
+      {creator} - plantified sprites'
+    left:
+      caption: Original - Nico Pardo
+      animation: {fileID: -2253911629886400664, guid: 2a686639dccc86647837f8160bf38522, type: 3}
+      sprites: []
+      clips:
+      - {fileID: -8192488964226468163, guid: 2a686639dccc86647837f8160bf38522, type: 3}
+      sourcePath: Assets/Game/Art/Enemies/Spitter/Spitter.aseprite
+    right:
+      caption: Plantified - {creator}
+      animation: {fileID: -2253911629886400664, guid: 78b461312949aec4bb255155fed3241b, type: 3}
+      sprites: []
+      clips:
+      - {fileID: 5917537482288442099, guid: 78b461312949aec4bb255155fed3241b, type: 3}
+      - {fileID: -3100369314251171874, guid: 78b461312949aec4bb255155fed3241b, type: 3}
+      - {fileID: 2667949614841947897, guid: 78b461312949aec4bb255155fed3241b, type: 3}
+      sourcePath: Assets/Game/Art/Animations/Enemies/spitter_infected.aseprite
+  - title: Audio
+    text: "\u0639\u0633\u0644 - original creature sounds\n{creator} - audio editing and sound design"
+    left:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+    right:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+  - title: Music
+    text: 'Lena Raine - Celeste Original Soundtrack and Farewell
+
+      Matthew Seiji - The Core (Say Goodbye Mix)'
+    left:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+    right:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+  - title: Coding
+    text: '{creator}
+
+      ChatGPT 6.1 Sol M - coding assistant'
+    left:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+    right:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+  - title: Tools
+    text: 'Unity
+
+      Aseprite
+
+      Audacity
+
+      GitHub Desktop'
+    left:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+    right:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+  - title: Course project
+    text: SWEB451 - Game Development
+    left:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+    right:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+  - title: Special thanks
+    text: "{professor}\n\u0639\u0633\u0644\nClassmates"
+    left:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 
+    right:
+      caption: 
+      animation: {fileID: 0}
+      sprites: []
+      clips: []
+      sourcePath: 

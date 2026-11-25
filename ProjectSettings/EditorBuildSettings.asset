@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Game/Scenes/Levels/Floor Skeletons/Floor_3.unity
     guid: 67616279078ff324a9365aa62a92cb79
+  - enabled: 1
+    path: Assets/Game/Scenes/Levels/Floor Skeletons/Credits.unity
+    guid: 9e4f5e61aeb8444b8db33125c2bac5be
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 498b19058156df6459c6cf88543bdfff, type: 3}

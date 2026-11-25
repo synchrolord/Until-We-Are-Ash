@@ -32,11 +32,13 @@ public sealed class CameraFollow2D : MonoBehaviour
         if (view != null) normalSize = view.orthographicSize;
     }
 
+    public bool Cutscene { get; set; }
+
     public void UseRooms(bool value) => roomCamera = value;
     
     private void LateUpdate()
     {
-        if (target == null)
+        if (Cutscene || target == null)
         {
             return;
         }

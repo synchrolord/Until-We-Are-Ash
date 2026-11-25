@@ -12,6 +12,10 @@ public sealed class CellWorldRoomManager : MonoBehaviour
     [SerializeField]
     private PlayerLiquidInteraction2D playerLiquidInteraction;
     public CellWorld2D CurrentWorld { get; private set; }
+    private CellWorld2D cutsceneWorld;
+
+    //the ending chooses the room on camera instead of moving the player there
+    public void SetCutsceneWorld(CellWorld2D world) => cutsceneWorld = world;
     private readonly System.Collections.Generic.Dictionary<CellWorld2D, float> effectUntil =
         new System.Collections.Generic.Dictionary<CellWorld2D, float>();
 
@@ -69,14 +73,15 @@ public sealed class CellWorldRoomManager : MonoBehaviour
 
     private void Update()
     {
-        CurrentWorld = player != null ? GetWorldAt(player.position) : null;
+        CurrentWorld = cutsceneWorld != null ? cutsceneWorld :
+            player != null ? GetWorldAt(player.position) : null;
 
         //simulate the player room and any neighbour currently receiving spray
         foreach (CellWorld2D world in worlds)
         {
             if (world != null)
                 world.SetRoomActive(world == CurrentWorld ||
-                    (effectUntil.TryGetValue(world, out float until) && Time.time < until));
+                    (cutsceneWorld == null && effectUntil.TryGetValue(world, out float until) && Time.time < until));
         }
         
         

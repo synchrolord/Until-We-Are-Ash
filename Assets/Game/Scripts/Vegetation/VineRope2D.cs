@@ -373,6 +373,19 @@ public sealed class VineRope2D : MonoBehaviour
     }
 
 
+    public void Settle(int steps)
+    {
+        if (!ready || startPoint == null || IsBroken || IsBurning) return;
+        //advance only the rope shape; do not speed up fire, damage or destruction
+        for (int step = 0; step < steps; step++)
+        {
+            MovePoints();
+            for (int i = 0; i < constraintPasses; i++) ApplyConstraints();
+        }
+        for (int i = 0; i < points.Length; i++) oldPoints[i] = points[i];
+        UpdateParts();
+    }
+
     private void FixedUpdate()
     {
         if (!ready || startPoint == null)

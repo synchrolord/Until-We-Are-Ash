@@ -15,6 +15,7 @@ public sealed class CameraZone2D : MonoBehaviour
     [SerializeField] private int priority;
     public float Area => Bounds.size.x * Bounds.size.y;
     public int Priority => priority;
+    public bool IsStatic => mode == Mode.Static;
     public float ViewHeight => viewHeight;
     public Bounds Bounds => area != null ? new Bounds(
         area.transform.TransformPoint(area.offset),

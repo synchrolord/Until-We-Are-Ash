@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 4524312141937547195}
   - component: {fileID: 3449100711372687437}
   - component: {fileID: 6160378559494020082}
+  - component: {fileID: 793900000000006000}
   m_Layer: 0
   m_Name: MABEL Fight
   m_TagString: Untagged
@@ -207,6 +208,54 @@ MonoBehaviour:
   fightRange: 90
   fightSpeed: 32
   fightShotInterval: 0.5
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &793900000000006000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7226678391166499068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d63480f26af844e3947146fa541f9437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndingCutscene2D
+  sceneCounts:
+  - scene: Floor_01
+    shots: 5
+  - scene: Floor_02
+    shots: 5
+  - scene: Floor_03
+    shots: 1
+  - scene: Floor_04
+    shots: 5
+  zoomSeconds: 3
+  roomSeconds: 3
+  fadeSeconds: 0.6
+  otherScenes: []
+  excludedScenes: []
+  settleSteps: 100
+  credits: {fileID: 11400000, guid: da6202ea0a384c8dac60f3a1d1a790c9, type: 2}
+  finalLineSeconds: 4
+  creditsScene: Credits
+  endingMusic: {fileID: 8300000, guid: 0a0d7357f97adf0499889f5721fb4631, type: 3}
+  musicVolume: 1
+  musicFadeSeconds: 1.5
+  firePoints: 24
+  fireSize: 3
+  fireInterval: 0.25
+  sceneryMaterial: {fileID: 2100000, guid: c5b5d5baea7245e2891168b3ac3441f7, type: 2}
+  charStrength: 0.35
+  charTint: {r: 0.22, g: 0.17, b: 0.14, a: 1}
+  mist: {fileID: 2800000, guid: 6c173cf376bc6834a85601f17ea3bb1c, type: 3}
+  smokeShader: {fileID: 4800000, guid: 79f3ae948d0044c39c6bb1e22ea357d5, type: 3}
+  smokeOpacity: 0.7
+  vignette: 0.65
+  smokeTiling: 2
+  smokeSpeed: {x: 0.01, y: 0.025}
   onFinished:
     m_PersistentCalls:
       m_Calls: []
