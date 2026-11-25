@@ -167,7 +167,9 @@ public sealed class PlayerMotor2D : MonoBehaviour
         }
         
         //which collider is overlapping groundCheck layers.
-        Collider2D[] hits = Physics2D.OverlapCircleAll(groundCheck.position, groundRadius, groundMask);
+        //enemy bodies count as ground under our feet, without changing wall checks
+        Collider2D[] hits = Physics2D.OverlapCircleAll(
+            groundCheck.position, groundRadius, groundMask | LayerMask.GetMask("Enemy"));
         
         foreach (Collider2D hit in hits)
         {
